@@ -1,0 +1,95 @@
+{% include "dashboard/header.html" %}
+{% block extra_css %}
+<style>
+/* Grid wrapper */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 20px; /* space between containers */
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.container {
+  background: #e0e5ec;
+  padding: 2rem;
+  border-radius: 25px;
+  box-shadow: 10px 10px 30px #bec3c9, -10px -10px 30px #ffffff;
+  text-align: center;
+  width: 100%;      /* take full available grid column space */
+  box-sizing: border-box; /* include padding inside width */
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.post {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.username {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.content {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ccc;
+  padding-top: 0.5rem;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #555;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.actions button:hover {
+  background: #dfe3ee; /* light hover effect like FB */
+}
+
+</style>
+{% endblock %}
+<h1>
+    News Feed 
+</h1>
+<div class="grid">
+  {% for name,post in posts.items %}
+    <div class="container">
+      <div class="post">
+        <h3 class="username">{{ name}}</h3>
+        <p class="content">{{ post }}</p>
+
+      </div>
+
+      <!-- Action buttons -->
+      <div class="actions">
+        <button class="like-btn">👍 Like</button>
+        <button class="comment-btn">💬 Comment</button>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+
+{% include "dashboard/footer.html" %}
