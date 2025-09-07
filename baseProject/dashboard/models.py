@@ -16,3 +16,6 @@ class User_posts(models.Model):
     u_name = models.ForeignKey(Login_info_new_p,on_delete=models.CASCADE)
     post = models.CharField(max_length=100)
     create_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return str(self.u_name)

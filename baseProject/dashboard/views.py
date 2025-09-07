@@ -3,16 +3,19 @@ from django.http import HttpResponse
 from .models import Login_info_new_p,User_posts
 from django.contrib import messages
 from django.contrib.auth import logout,authenticate
+from .forms import UserPostsForm
 # Create your views here.
 def demo(request):
-    posts = User_posts.objects.all()
-    user_names_post = {}
+    posts = User_posts.objects.all().order_by('-create_at')
+    users = []
+    U_posts = []
     for post in posts:
         log_user = Login_info_new_p.objects.get(email=post.u_name)
         u_name = log_user.fname + log_user.lname
         status = post.post
-        user_names_post[u_name] = status
-    return render(request,"dashboard/landing_page.html",{"posts": user_names_post})
+        U_posts.append(status)
+        users.append(u_name)
+    return render(request,"dashboard/landing_page.html",{"posts": zip(users,U_posts)})
 
 def register(request):
     return HttpResponse("NEW ACCOUNT CREATED.")
@@ -54,3 +57,17 @@ def login(request):
 def logout_view(request):
     logout(request)
     return redirect("login")
+
+def add_post(request):
+    if request.method == "POST":
+        form = UserPostsForm(request.POST)
+        
+        if form.is_valid():
+            # return HttpResponse("Post Added Successfully.")
+            post = form.save(commit=False)
+            post.u_name = Login_info_new_p.objects.get(email=request.session.get('email'))
+            post.save()
+            return redirect("home")
+    else:
+        form = UserPostsForm()
+    return HttpResponse("Post Was not Added.")
