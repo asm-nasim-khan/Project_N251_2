@@ -1,0 +1,37 @@
+{% include "dashboard/header.html" %}
+
+{% block extra_css %}
+<style>
+.friend-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.friend {
+  background: #f1f3f6;
+  margin: 0.5rem 0;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  box-shadow: inset 2px 2px 5px #c9cdd2, inset -2px -2px 5px #ffffff;
+  font-weight: 500;
+  color: #333;
+}
+
+
+</style>
+{% endblock %}
+
+<!-- Friend List Section -->
+<div class="container" style="margin-top: 2rem;">
+  <h2>👥 Friend List</h2>
+  <ul class="friend-list">
+    {% for friend in friends %}
+      <li class="friend">{{ friend.name }}<br> ({{ friend.email }})</li>
+    {% empty %}
+      <li class="friend">No friends added yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% include "dashboard/footer.html" %}

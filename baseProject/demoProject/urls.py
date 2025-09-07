@@ -24,5 +24,7 @@ urlpatterns = [
     path('login',views.login,{}),
     path('profile/<int:u_id>',views.profile,{}),
     
-    path('dashboard/', include('dashboard.urls'))    
+    path('dashboard/', include('dashboard.urls')),
+    path('', include('friends.urls'))    
+       
 ]
