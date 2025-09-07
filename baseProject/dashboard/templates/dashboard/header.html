@@ -92,6 +92,8 @@
       <li><a href="{% url 'home' %}">Contact</a></li>
       {% if request.session.user_id %}
         <li><a href="{% url 'friends' %}">Friends</a></li>
+        <li><a href="{% url 'friends_req' %}">Friend Requests</a></li>
+
         <li><a href="{% url 'logout' %}">Logout</a></li>
         <li><a href="">Hi, {{ request.session.name }} 👋</a></li>
 

@@ -1,189 +1,228 @@
-{% include "dashboard/header.html" %}
-{% block extra_css %}
-<style>
-/* Grid wrapper */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-  gap: 20px; /* space between containers */
-  width: 100%;
-  margin: 2rem 0;
+
+
+{% comment %} Single column {% endcomment %}
+
+{% comment %} {% include "dashboard/header.html" %}
+{% block extra_css %} {% endcomment %}
+{% comment %} <style>
+/* Centered page column like Facebook */
+.page {
+  max-width: 760px;     /* tweak to taste (680–820 works well) */
+  margin: 2rem auto;    /* centers the column */
+  padding: 0 16px;      /* small side padding on mobile */
 }
 
-.container {
+/* Card look shared by composer + posts */
+.card {
   background: #e0e5ec;
-  padding: 2rem;
-  border-radius: 25px;
+  padding: 1.2rem 1.4rem;
+  border-radius: 18px;
   box-shadow: 10px 10px 30px #bec3c9, -10px -10px 30px #ffffff;
-  text-align: center;
-  width: 100%;      /* take full available grid column space */
-  box-sizing: border-box; /* include padding inside width */
 }
 
-/* Tabs */
-.tabs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-
-.post {
-  text-align: left;
-  margin-bottom: 1rem;
-}
-
-.username {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.content {
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.4;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-around;
-  border-top: 1px solid #ccc;
-  padding-top: 0.5rem;
-}
-
-.actions button {
-  background: none;
+/* Composer (post box) */
+.composer { margin-bottom: 1rem; }
+.composer .input-group label { font-weight: 600; }
+.composer .input-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
   border: none;
+  background: #e0e5ec;
+  box-shadow: inset 3px 3px 6px #bec3c9, inset -3px -3px 6px #ffffff;
+  font-size: 15px;
+}
+.action-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  margin-top: 0.7rem;
+  border-radius: 12px;
+  background: #e0e5ec;
+  box-shadow: 5px 5px 10px #bec3c9, -5px -5px 10px #ffffff;
+  font-weight: 700;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #555;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  transition: background 0.2s ease;
 }
+.action-btn i { margin-right: 6px; }
 
-.actions button:hover {
-  background: #dfe3ee; /* light hover effect like FB */
+/* Feed list */
+.feed { display: flex; flex-direction: column; gap: 16px; }
+
+/* Post card */
+.post-card .username { font-weight: 700; color: #333; margin-bottom: .35rem; }
+.post-card .content { color: #555; line-height: 1.5; margin-bottom: .75rem; }
+.actions {
+  display: flex; gap: 12px; justify-content: space-between;
+  border-top: 1px solid #d7dbe2; padding-top: .6rem;
 }
-    
-    .tabs {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-    .tabs button {
-      flex: 1;
-      padding: 0.5rem;
-      margin: 0 5px;
-      border: none;
-      border-radius: 15px;
-      background: #e0e5ec;
-      box-shadow: inset 5px 5px 10px #bec3c9,
-                  inset -5px -5px 10px #ffffff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .tabs .active {
-      background: linear-gradient(145deg, #d1d9e6, #ffffff);
-      box-shadow: inset 2px 2px 5px #bec3c9,
-                  inset -2px -2px 5px #ffffff;
-    }
-    .input-group {
-      margin-bottom: 1rem;
-    }
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 0.5rem;
-      border-radius: 10px;
-      border: none;
-      background: #e0e5ec;
-      box-shadow: inset 3px 3px 6px #bec3c9,
-                  inset -3px -3px 6px #ffffff;
-      font-size: 14px;
-    }
-    .action-btn {
-      width: 100%;
-      padding: 0.7rem;
-      border: none;
-      margin-top: 0.5rem;
-      border-radius: 15px;
-      background: #e0e5ec;
-      box-shadow: 5px 5px 10px #bec3c9,
-                  -5px -5px 10px #ffffff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .action-btn i {
-      margin-right: 5px;
-    }
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    .social-icon {
-      width: 40px;
-      height: 40px;
-      background: #e0e5ec;
-      border-radius: 50%;
-      box-shadow: 5px 5px 10px #bec3c9,
-                  -5px -5px 10px #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: 18px;
-    }
-    .or {
-      text-align: center;
-      margin-top: 1.2rem;
-      font-size: 14px;
-      color: #777;
-    }
-
+.actions button {
+  flex: 1;
+  background: none; border: none; cursor: pointer;
+  font-size: .95rem; font-weight: 600; color: #555;
+  padding: .5rem .75rem; border-radius: 10px; transition: background .2s ease;
+}
+.actions button:hover { background: #dfe3ee; }
 </style>
 {% endblock %}
 
-<form id="loginForm" method="POST" action="{% url 'add_post'%}">
-      {% csrf_token %}
-      <div class="input-group">
-        <label>What's in your Mind? </label>
-        <input type="text" name="post" required />
-      </div>
-      <button type="submit" class="action-btn">
-        <i>📬</i> Post
-      </button>
-    </form>
+<div class="page">
 
-    <br>
-<h1>
-    News Feed 
-</h1>
-<div class="grid">
-  {% for name, post in posts %}
-    <div class="container">
-      <div class="post">
+  <!-- Composer: centered at top -->
+  <form id="loginForm" method="POST" action="{% url 'add_post' %}" class="card composer">
+    {% csrf_token %}
+    <div class="input-group">
+      <label>What's on your mind?</label>
+      <input type="text" name="post" required />
+    </div>
+    <button type="submit" class="action-btn">
+      <i>📬</i> Post
+    </button>
+  </form>
+
+  <h1 style="margin: 1rem 0;">News Feed</h1>
+
+  <!-- Feed: stacked cards under composer -->
+  <div class="feed">
+    {% for name, post in posts %}
+      <div class="card post-card">
         <h3 class="username">{{ name }}</h3>
         <p class="content">{{ post }}</p>
-
+        <div class="actions">
+          <button class="like-btn">👍 Like</button>
+          <button class="comment-btn">💬 Comment</button>
+        </div>
       </div>
+    {% endfor %}
+  </div>
 
-      <!-- Action buttons -->
-      <div class="actions">
-        <button class="like-btn">👍 Like</button>
-        <button class="comment-btn">💬 Comment</button>
-      </div>
-    </div>
-  {% endfor %}
 </div>
 
+{% include "dashboard/footer.html" %} {% endcomment %}
 
+
+{% include "dashboard/header.html" %}
+{% block extra_css %}
+<style>
+/* Center column wrapper */
+.page {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 16px;
+}
+
+/* Composer box */
+.card {
+  background: #e0e5ec;
+  padding: 1.2rem 1.4rem;
+  border-radius: 18px;
+  box-shadow: 10px 10px 30px #bec3c9, -10px -10px 30px #ffffff;
+}
+.composer {
+  margin-bottom: 2rem;
+  max-width: 700px;   /* keep it centered and narrower */
+  margin-left: auto;
+  margin-right: auto;
+}
+.composer .input-group label { font-weight: 600; }
+.composer .input-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: none;
+  background: #e0e5ec;
+  box-shadow: inset 3px 3px 6px #bec3c9, inset -3px -3px 6px #ffffff;
+  font-size: 15px;
+}
+.action-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  margin-top: 0.7rem;
+  border-radius: 12px;
+  background: #e0e5ec;
+  box-shadow: 5px 5px 10px #bec3c9, -5px -5px 10px #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.action-btn i { margin-right: 6px; }
+
+/* Grid for posts */
+.feed-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(1, minmax(0, 1fr)); /* mobile: 1 per row */
+}
+@media (min-width: 700px) {
+  .feed-grid { grid-template-columns: repeat(2, 1fr); } /* tablet: 2 per row */
+}
+@media (min-width: 1024px) {
+  .feed-grid { grid-template-columns: repeat(3, 1fr); } /* desktop: 3 per row */
+}
+
+.post-card {
+  background: #e0e5ec;
+  padding: 1.2rem;
+  border-radius: 18px;
+  box-shadow: 10px 10px 30px #bec3c9, -10px -10px 30px #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.username { font-weight: 700; margin-bottom: .35rem; color: #333; }
+.content { color: #555; line-height: 1.5; margin-bottom: .75rem; }
+.actions {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #d7dbe2;
+  padding-top: .6rem;
+  gap: 10px;
+}
+.actions button {
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: .95rem;
+  font-weight: 600;
+  color: #555;
+  padding: .5rem .75rem;
+  border-radius: 10px;
+  transition: background .2s ease;
+}
+.actions button:hover { background: #dfe3ee; }
+</style>
+{% endblock %}
+
+<div class="page">
+
+  <!-- Composer -->
+  <form id="loginForm" method="POST" action="{% url 'add_post' %}" class="card composer">
+    {% csrf_token %}
+    <div class="input-group">
+      <label>What's on your mind?</label>
+      <input type="text" name="post" required />
+    </div>
+    <button type="submit" class="action-btn">
+      <i>📬</i> Post
+    </button>
+  </form>
+
+  <h1 style="margin: 1rem 0;">News Feed</h1>
+
+  <!-- Grid of posts -->
+  <div class="feed-grid">
+    {% for name, post in posts %}
+      <div class="post-card">
+        <h3 class="username">{{post}}</h3>
+        <p class="content">{{ name }}</p>
+        <div class="actions">
+          <button class="like-btn">👍 Like</button>
+          <button class="comment-btn">💬 Comment</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
 
 {% include "dashboard/footer.html" %}
