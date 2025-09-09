@@ -3,6 +3,10 @@
 **admin Credentials** <br>
 nasim<br>
 12345 <br>
+**Login Page** <br>
+<img width="1881" height="885" alt="image" src="https://github.com/user-attachments/assets/7f2c342c-4147-4489-b3e2-db22dd59f7fd" />
+**Sign Up Page** <br>
+<img width="1900" height="861" alt="image" src="https://github.com/user-attachments/assets/91bc2e47-813c-4fc5-abfd-e07379b74c5e" />
 
 **Homepage** <br>
 <img width="1911" height="880" alt="image" src="https://github.com/user-attachments/assets/f69886e0-a40a-470c-9b95-29105dab1e68" />
